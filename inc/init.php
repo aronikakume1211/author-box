@@ -19,6 +19,7 @@ class GATB_Init
             'enqueue.php',
             'templates/gatb-profile.php',
             'settings.php',
+            'shortcodes/init.php'
         ];
 
         foreach ($files as $file) {
@@ -37,5 +38,6 @@ class GATB_Init
         new GATB_Enqueue();
         new GATB_Profile();
         new GATB_Settings();
+        new GATB_Shortcodes_Init();
     }
 }
