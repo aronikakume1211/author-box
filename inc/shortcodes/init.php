@@ -7,6 +7,8 @@ class GATB_Shortcodes_Init
     private $image_width;
     private $image_height;
     private $border_radius;
+    private $show_link;
+    private $read_more_text;
 
     public function __construct()
     {
@@ -17,6 +19,9 @@ class GATB_Shortcodes_Init
         $this->image_width = get_option('author_image_width', '150');
         $this->image_height = get_option('author_image_height', '150');
         $this->border_radius = get_option('author_border_radius', '0');
+        $this->show_link = get_option('author_show_user_link', '1');
+        $this->read_more_text = get_option('author_user_link_text', 'Read More');
+
 
         // Initialize shortcodes
         add_action('init', [$this, 'gatb_shortcodes_init']);
@@ -42,6 +47,8 @@ class GATB_Shortcodes_Init
             'image_width' => $this->image_width,
             'image_height' => $this->image_height,
             'border_radius' => $this->border_radius,
+            'show_link' => $this->show_link,
+            'read_more_text' => $this->read_more_text,
             'layout' => $this->selected_layout
         ];
 

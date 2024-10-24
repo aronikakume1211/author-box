@@ -67,6 +67,8 @@ class GATB_Settings
         $this->render_image_width_field();
         $this->render_image_height_field();
         $this->render_border_radius_field();
+        $this->render_show_user_link_field();
+        $this->render_user_link_text_field();
     }
 
     /**
@@ -81,6 +83,8 @@ class GATB_Settings
         register_setting('author_info_settings_group', 'author_image_width');
         register_setting('author_info_settings_group', 'author_image_height');
         register_setting('author_info_settings_group', 'author_border_radius');
+        register_setting('author_info_settings_group', 'author_show_user_link');
+        register_setting('author_info_settings_group', 'author_user_link_text');
 
         // Add a section to group the fields
         add_settings_section(
@@ -132,6 +136,22 @@ class GATB_Settings
         );
 
         add_settings_field(
+            'author_show_user_link',
+            'Show User Link',
+            [$this, 'render_show_user_link_field'],
+            'author-info-settings',
+            'author_info_section'
+        );
+
+        add_settings_field(
+            'author_user_link_text',
+            'User Link Text',
+            [$this, 'render_user_link_text_field'],
+            'author-info-settings',
+            'author_info_section'
+        );
+
+        add_settings_field(
             'author_layout',
             'Select Layout',
             [$this, 'render_layout_field'],
@@ -140,13 +160,28 @@ class GATB_Settings
         );
     }
 
+    public function render_show_user_link_field()
+    {
+        $value = get_option('author_show_user_link', '0'); 
+        echo '<br /><br /><label for="author_show_user_link">';
+        echo '<input type="checkbox" id="author_show_user_link" name="author_show_user_link" value="1" ' . checked(1, $value, false) . ' />';
+        echo ' Enable User Link';
+        echo '</label><br /><br />';
+    }
+
+    public function render_user_link_text_field()
+    {
+        $text = get_option('author_user_link_text', 'Read More'); 
+        echo '<input type="text" name="author_user_link_text" value="' . esc_attr($text) . '" />';
+    }
+
     /**
      * 
      */
     public function render_border_radius_field()
     {
-        $value = get_option('author_border_radius', 0); // Default to 0 if not set
-        echo '<br /><br /><label>Border Radius</label> :<input type="range" id="author_border_radius" name="author_border_radius" min="0" max="100" value="' . esc_attr($value) . '" oninput="authorBorderRadiusOutput.value = this.value" />';
+        $value = get_option('author_border_radius', 0); 
+        echo '<br /><br /><label>Border Radius</label> : <input type="range" id="author_border_radius" name="author_border_radius" min="0" max="100" value="' . esc_attr($value) . '" oninput="authorBorderRadiusOutput.value = this.value" />';
         echo '<output id="authorBorderRadiusOutput" style="margin-left: 10px;">' . esc_attr($value) . '</output> %';
     }
 
@@ -173,7 +208,7 @@ class GATB_Settings
      */
     public function render_image_width_field()
     {
-        $width = get_option('author_image_width', '150'); // Default width
+        $width = get_option('author_image_width', '150'); 
         echo "<br /><br /><label>Width</label> :<input type='number' name='author_image_width' value='$width' min='0' /> px"; // Add 'px' label
     }
 
@@ -182,7 +217,7 @@ class GATB_Settings
      */
     public function render_image_height_field()
     {
-        $height = get_option('author_image_height', '150'); // Default height
+        $height = get_option('author_image_height', '150'); 
         echo "<br /><br /><label>Height</label> :<input type='number' name='author_image_height' value='$height' min='0' /> px"; // Add 'px' label
     }
 
