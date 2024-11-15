@@ -14,6 +14,21 @@ class Settings extends Sanitization
         $this->sanitizer = new \RSAB\Sanitization();
         add_action('admin_menu', [$this, 'rsab_rsab_author_info_settings_menu']);
         add_action('admin_init', [$this, 'rsab_register_settings']);
+        add_filter('plugin_action_links_' . plugin_basename(plugin_dir_path(__DIR__) . 'really-simple-author-box.php'), [$this,'rsab_author_action_links']);
+
+
+    }
+
+    /**
+     * Add Settings action links 
+     */
+
+     public function rsab_author_action_links($links) {
+        $custom_link = '<a href="options-general.php?page=really-simple-author-box-settings">Settings</a>';
+        
+        // array_unshift($links, $custom_link); 
+        $links[]=$custom_link;
+        return $links;
     }
 
     /**
